@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/productos")
+@RequestMapping("/citerium/api/productos")
 public class ProductoController {
 
     @Autowired
@@ -18,10 +18,21 @@ public class ProductoController {
     public List<Producto> getAllProductos() {
         return productoService.findAll();
     }
+    
+    @GetMapping("/{id}")
+    public Producto getProductoById(@PathVariable int id) {
+        return productoService.findById(id);
+    }
 
     @PostMapping
     public int createProducto(@RequestBody Producto producto) {
         return productoService.save(producto);
+    }
+    
+     @PutMapping("/{id}")
+    public int updateProducto(@PathVariable int id, @RequestBody Producto producto) {
+        producto.setId(id);
+        return productoService.update(producto);
     }
 
     @DeleteMapping("/{id}")

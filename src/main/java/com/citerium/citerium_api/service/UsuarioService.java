@@ -20,6 +20,14 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public Usuario findById(int id) {
+        return usuarioRepository.findById(id);
+    }
+    
+    public int update(Usuario usuario) {
+        return usuarioRepository.update(usuario);
+    }
+    
     public int save(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }

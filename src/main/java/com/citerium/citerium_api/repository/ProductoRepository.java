@@ -30,6 +30,10 @@ public class ProductoRepository {
             return producto;
         }
     };
+    
+    public Producto findById(int id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM producto WHERE id_producto = ?", new Object[]{id}, rowMapper);
+    }
 
     public List<Producto> findAll() {
         return jdbcTemplate.query("SELECT * FROM producto", rowMapper);
@@ -40,6 +44,13 @@ public class ProductoRepository {
                 "INSERT INTO producto (nombre, codigo, categoria, fecha, unidades, precio) VALUES (?, ?, ?, ?, ?, ?)",
                 producto.getNombre(), producto.getCodigo(), producto.getCategoria(), producto.getFecha(),
                 producto.getUnidades(), producto.getPrecio());
+    }
+    
+    public int update(Producto producto) {
+        return jdbcTemplate.update(
+                "UPDATE producto SET nombre = ?, codigo = ?, categoria = ?, fecha = ?, unidades = ?, precio = ? WHERE id_producto = ?",
+                producto.getNombre(), producto.getCodigo(), producto.getCategoria(), producto.getFecha(),
+                producto.getUnidades(), producto.getPrecio(), producto.getId());
     }
 
     public int deleteById(int id) {

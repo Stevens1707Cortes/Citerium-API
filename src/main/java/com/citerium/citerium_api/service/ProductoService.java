@@ -16,9 +16,17 @@ public class ProductoService {
     public List<Producto> findAll() {
         return productoRepository.findAll();
     }
+    
+    public Producto findById(int id) {
+        return productoRepository.findById(id);
+    }
 
     public int save(Producto producto) {
         return productoRepository.save(producto);
+    }
+    
+    public int update(Producto producto) {
+        return productoRepository.update(producto);
     }
 
     public int deleteById(int id) {

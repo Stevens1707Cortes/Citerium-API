@@ -29,6 +29,10 @@ public class UsuarioRepository {
             return usuario;
         }
     };
+    
+    public Usuario findById(int id) {
+        return jdbcTemplate.queryForObject("SELECT * FROM usuario WHERE id_usuario = ?", new Object[]{id}, rowMapper);
+    }
 
     public List<Usuario> findAll() {
         return jdbcTemplate.query("SELECT * FROM usuario", rowMapper);
@@ -39,6 +43,13 @@ public class UsuarioRepository {
                 "INSERT INTO usuario (nombre, apellido, identificacion, email, contrasena) VALUES (?, ?, ?, ?, ?)",
                 usuario.getNombre(), usuario.getApellido(), usuario.getIdentificacion(), usuario.getEmail(),
                 usuario.getContrasena());
+    }
+    
+    public int update(Usuario usuario) {
+        return jdbcTemplate.update(
+                "UPDATE usuario SET nombre = ?, apellido = ?, identificacion = ?, email = ?, contrasena = ? WHERE id_usuario = ?",
+                usuario.getNombre(), usuario.getApellido(), usuario.getIdentificacion(), usuario.getEmail(),
+                usuario.getContrasena(), usuario.getId());
     }
 
     public int deleteById(int id) {

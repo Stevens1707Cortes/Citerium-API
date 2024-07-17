@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/citerium/api/usuarios")
 public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
@@ -18,10 +18,21 @@ public class UsuarioController {
     public List<Usuario> getAllUsuarios() {
         return usuarioService.findAll();
     }
-
+    
+    @GetMapping("/{id}")
+    public Usuario getUsuarioById(@PathVariable int id) {
+        return usuarioService.findById(id);
+    }
+    
     @PostMapping
     public int createUsuario(@RequestBody Usuario usuario) {
         return usuarioService.save(usuario);
+    }
+    
+    @PutMapping("/{id}")
+    public int updateUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
+        usuario.setId(id);
+        return usuarioService.update(usuario);
     }
 
     @DeleteMapping("/{id}")
